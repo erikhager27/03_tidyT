@@ -1,0 +1,99 @@
+---
+title: 'Tidy Tuesday #3'
+author: "Erik Hager"
+output: 
+  html_document:
+    df_print: paged
+    code_download: true
+    theme: cerulean
+---
+
+```{r setup, include=FALSE}
+# You may want to comment this out at first so you see important messages and warnings
+knitr::opts_chunk$set(echo = TRUE, error=TRUE, message=FALSE, warning=FALSE)
+```
+
+```{r libraries}
+library(tidyverse)     # for graphing and data cleaning
+library(lubridate)     # for date manipulation
+library(ggthemes)      # for even more plotting themes
+theme_set(theme_minimal())       # My favorite ggplot() theme :)
+```
+
+```{r}
+# Read in the data for the week
+members <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-22/members.csv')
+expeditions <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-22/expeditions.csv')
+peaks <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-22/peaks.csv')
+```
+
+This week's data is about the Himalayan Climbing Expeditions. Read more about it, including definitions of variables, [here](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-09-22/readme.md). There are three datasets, so it might be a great opportunity to practice the joins!
+
+Please delete all the unneeded code and instructions. Remember to tweet out your graph with `#TidyTuesday` and `#MacTidyTuesday` hashtags if you'd like. If you want me to tweet it out for you, please take a screenshot (command+shift+4 on a Mac ... Google how to do it on a Windows) and add it to this [Google doc](https://docs.google.com/document/d/1akjbDlpsTHNSwQO3pkf4tUz89MRScnaRL7hDhybM7Jg/edit?usp=sharing). Be sure to have your name either on the graph somewhere (I'd recommend adding a caption or tag label) or right above the graph in the Google Doc. Thanks!
+
+```{r}
+memex <- members %>% 
+  inner_join(expeditions, 
+            by = "expedition_id") %>% 
+  select(expedition_id, member_id, year.x, season.x, peak_name.x, sex, age, died)
+
+memex
+
+memex %>% 
+  filter(died %in% c("TRUE")) %>%
+  filter(peak_name.x %in% c("Everest",
+                            "Kangchenjunga", 
+                            "Manaslu",
+                            "Dhaulagiri I", 
+                            "Ama Dablam", 
+                            "Annapurna I")) %>%
+  group_by(peak_name.x, year.x) %>% 
+  summarize(deaths = sum(died)) %>%
+  #filter(year.x %in% c("1900", "1925", "1950", "1975","1980", "2000")) %>% 
+  #top_n(25) %>% 
+  ggplot(aes(x = year.x, y = deaths, color= peak_name.x)) +
+  geom_line()# +
+  #facet_wrap(vars(peak_name.x))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
