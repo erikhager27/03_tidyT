@@ -5,23 +5,20 @@ output:
   html_document:
     df_print: paged
     code_download: true
-    theme: cerulean
+    theme: journal
 ---
 
 ```{r setup, include=FALSE}
-# You may want to comment this out at first so you see important messages and warnings
 knitr::opts_chunk$set(echo = TRUE, error=TRUE, message=FALSE, warning=FALSE)
 ```
 
 ```{r libraries}
-library(tidyverse)     # for graphing and data cleaning
-library(lubridate)     # for date manipulation
-library(ggthemes)      # for even more plotting themes
-theme_set(theme_minimal())       # My favorite ggplot() theme :)
+library(tidyverse)     
+library(lubridate)     
+library(ggthemes)      
 ```
 
 ```{r}
-# Read in the data for the week
 members <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-22/members.csv')
 expeditions <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-22/expeditions.csv')
 peaks <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-22/peaks.csv')
@@ -33,9 +30,15 @@ Please delete all the unneeded code and instructions. Remember to tweet out your
 
 ```{r}
 memex <- members %>% 
-  inner_join(expeditions, 
-            by = "expedition_id") %>% 
-  select(expedition_id, member_id, year.x, season.x, peak_name.x, sex, age, died)
+  inner_join(expeditions, by = "expedition_id") %>% 
+  select(expedition_id, 
+         member_id,
+         year.x,
+         season.x,
+         peak_name.x,
+         sex,
+         age,
+         died)
 
 memex
 
@@ -49,11 +52,13 @@ memex %>%
                             "Annapurna I")) %>%
   group_by(peak_name.x, year.x) %>% 
   summarize(deaths = sum(died)) %>%
-  #filter(year.x %in% c("1900", "1925", "1950", "1975","1980", "2000")) %>% 
-  #top_n(25) %>% 
   ggplot(aes(x = year.x, y = deaths, color= peak_name.x)) +
-  geom_line()# +
-  #facet_wrap(vars(peak_name.x))
+  geom_line() +
+  labs(title = "Climbing Deaths Over Time at Various Peaks",
+       y = "Deaths",
+       x = "Year",
+       color = "Peak") +
+  theme_dark()
 ```
 
 
