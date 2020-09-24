@@ -24,9 +24,7 @@ expeditions <- readr::read_csv('https://raw.githubusercontent.com/rfordatascienc
 peaks <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-22/peaks.csv')
 ```
 
-This week's data is about the Himalayan Climbing Expeditions. Read more about it, including definitions of variables, [here](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-09-22/readme.md). There are three datasets, so it might be a great opportunity to practice the joins!
-
-Please delete all the unneeded code and instructions. Remember to tweet out your graph with `#TidyTuesday` and `#MacTidyTuesday` hashtags if you'd like. If you want me to tweet it out for you, please take a screenshot (command+shift+4 on a Mac ... Google how to do it on a Windows) and add it to this [Google doc](https://docs.google.com/document/d/1akjbDlpsTHNSwQO3pkf4tUz89MRScnaRL7hDhybM7Jg/edit?usp=sharing). Be sure to have your name either on the graph somewhere (I'd recommend adding a caption or tag label) or right above the graph in the Google Doc. Thanks!
+**Question:** How have deaths varied over the years at these six popular climbing peaks?
 
 ```{r}
 memex <- members %>% 
